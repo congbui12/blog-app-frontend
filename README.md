@@ -30,39 +30,39 @@ This is the **frontend** of a fullstack MERN blog application, built with **Reac
 - Create / Edit / Delete posts
 - Pagination & Lazy loading
 
-  ### Comments
-  - View comments by posts
-  - Add / Edit / Delete comments
+### Comments
+- View comments by posts
+- Add / Edit / Delete comments
  
-  ### Favorites
-  - Add posts to favorites
-  - Remove posts from favorites
-  - View favorite posts
- 
-  ### User profile
-  - Fetch profile details
-  - Edit profile
-  - View user's own posts
+### Favorites
+- Add posts to favorites
+- Remove posts from favorites
+- View favorite posts
 
-  ## Tech Stack
-  - React: UI library
-  - Vite: Build tool and dev server
-  - React Router: Client-side routing
-  - Axios: API communication
-  - ESLint + Prettier: Code quality & formatting
-  - Tailwind CSS: Styling
- 
-  ## Installation
+### User profile
+- Fetch profile details
+- Edit profile
+- View user's own posts
 
-  ```bash
-  # Clone the repository
-  git clone https://github.com/congbui12/blog-app-frontend.git
+## Tech Stack
+- React: UI library
+- Vite: Build tool and dev server
+- React Router: Client-side routing
+- Axios: API communication
+- ESLint + Prettier: Code quality & formatting
+- Tailwind CSS: Styling
 
-  # Navigate into the project
-  cd blog-app-frontend
+## Installation
 
-  # Install dependencies
-  npm install
+```bash
+# Clone the repository
+git clone https://github.com/congbui12/blog-app-frontend.git
 
-  # Start the development server
-  npm run dev
+# Navigate into the project
+cd blog-app-frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
