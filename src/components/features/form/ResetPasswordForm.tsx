@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPasswordFormSchema, type ResetPasswordFormDTO } from '../../../schemas';
-import InputField from '../../basics/InputField';
-import Button from '../../basics/Button';
+import AppTextField from '../../basics/AppTextField';
+import { Flex, Button } from '@radix-ui/themes';
 import { KeyIcon } from 'lucide-react';
 
 interface ResetPasswordFormProps {
@@ -22,22 +22,28 @@ const ResetPasswordForm = ({ onSubmit, isLoading }: ResetPasswordFormProps) => {
     },
   });
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
-      <InputField
-        label="New password"
-        type="password"
-        icon={KeyIcon}
-        placeholder="******"
-        control={control}
-        name="newPassword"
-      />
-      <Button
-        type="submit"
-        disabled={isLoading || !isDirty}
-        className="w-full py-3 mt-2 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-200 disabled:opacity-70 transition-all"
-      >
-        {isLoading ? 'Saving...' : 'Save'}
-      </Button>
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <Flex direction="column" gap="4" align="stretch">
+        <AppTextField
+          label="New password"
+          type="password"
+          icon={KeyIcon}
+          placeholder="******"
+          control={control}
+          name="newPassword"
+        />
+        <Button
+          size="3"
+          variant="solid"
+          highContrast
+          loading={isLoading}
+          className="cursor-pointer"
+          type="submit"
+          disabled={!isDirty}
+        >
+          Save
+        </Button>
+      </Flex>
     </form>
   );
 };

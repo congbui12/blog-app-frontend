@@ -1,7 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useResetPassword } from '../../hooks';
-import ResetPasswordForm from '../../components/features/form/ResetPasswordForm';
-import type { ResetPasswordFormDTO } from '../../schemas';
+import { useResetPassword } from '../hooks';
+import ResetPasswordForm from '../components/features/form/ResetPasswordForm';
+import type { ResetPasswordFormDTO } from '../schemas';
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();

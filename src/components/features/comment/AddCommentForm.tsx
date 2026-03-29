@@ -43,7 +43,7 @@ const AddCommentForm = ({ postId }: AddCommentFormProps) => {
       name="content"
       onSubmit={handleSubmit(handleAddComment)}
       isPending={isPending}
-      isDisabled={!isDirty || isPending}
+      isDisabled={!isDirty}
       placeholder="Post a comment"
       buttonText="Post"
     />

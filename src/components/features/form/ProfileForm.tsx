@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { useForm, type Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { User } from '../../../types';
 import { editProfileSchema, type EditProfileDTO } from '../../../schemas';
-import InputField from '../../basics/InputField';
-import Button from '../../basics/Button';
+import AppTextField from '../../basics/AppTextField';
+import { Flex, Button } from '@radix-ui/themes';
 import { UserIcon } from 'lucide-react';
+import { useOutletContext } from 'react-router-dom';
+import type { ProfileContextType } from '../../../pages/Profile';
 
-interface ProfileFormProps {
-  user: User;
-  onSubmit: (data: EditProfileDTO) => void;
-  isLoading: boolean;
-}
-
-const ProfileForm = ({ user, onSubmit, isLoading }: ProfileFormProps) => {
+const ProfileForm = () => {
+  const { user, updateProfile, isUpdatePending } = useOutletContext<ProfileContextType>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const {
     control,
@@ -28,7 +24,7 @@ const ProfileForm = ({ user, onSubmit, isLoading }: ProfileFormProps) => {
   });
 
   const handleSaveEdit = (data: EditProfileDTO) => {
-    onSubmit(data);
+    updateProfile(data);
     setIsEditing(false);
   };
 
@@ -38,43 +34,57 @@ const ProfileForm = ({ user, onSubmit, isLoading }: ProfileFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSaveEdit)} className="flex flex-col gap-5 w-full">
-      <InputField
-        label="Username"
-        icon={UserIcon}
-        placeholder="e.g. john_doe"
-        control={control}
-        name="username"
-        disabled={!isEditing}
-      />
-      <div key={isEditing ? 'edit' : 'view'} className="flex items-center gap-3">
-        {isEditing ? (
-          <>
+    <form onSubmit={handleSubmit(handleSaveEdit)} className="w-full md:w-3/4 mx-auto">
+      <Flex direction="column" gap="4" align="stretch">
+        <AppTextField
+          label="Username"
+          icon={UserIcon}
+          placeholder="e.g. john_doe"
+          control={control}
+          name="username"
+          disabled={!isEditing}
+        />
+        <Flex key={isEditing ? 'edit' : 'view'} direction="row" gap="3" align="center">
+          {isEditing ? (
+            <>
+              <Button
+                size="3"
+                variant="soft"
+                color="gray"
+                type="button"
+                onClick={handleCancelEdit}
+                className="flex-1 cursor-pointer font-bold transition-all"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="3"
+                variant="solid"
+                color="cyan"
+                radius="large"
+                highContrast
+                loading={isUpdatePending}
+                disabled={!isDirty}
+                type="submit"
+                className="flex-1 cursor-pointer font-bold shadow-lg shadow-cyan-900/10 transition-all"
+              >
+                Save changes
+              </Button>
+            </>
+          ) : (
             <Button
+              size="3"
+              variant="solid"
+              highContrast
               type="button"
-              onClick={handleCancelEdit}
-              className="w-1/3 py-3 mt-2 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 shadow-lg shadow-gray-200 transition-all"
+              onClick={() => setIsEditing(true)}
+              className="flex-1 cursor-pointer font-bold shadow-md transition-all"
             >
-              Cancel
+              Edit profile
             </Button>
-            <Button
-              disabled={isLoading || !isDirty}
-              type="submit"
-              className="w-1/3 py-3 mt-2 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 shadow-lg shadow-teal-200 disabled:opacity-70 transition-all"
-            >
-              {isLoading ? 'Saving...' : 'Save'}
-            </Button>
-          </>
-        ) : (
-          <Button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            className="w-1/3 py-3 mt-2 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg shadow-green-200 transition-all"
-          >
-            Edit
-          </Button>
-        )}
-      </div>
+          )}
+        </Flex>
+      </Flex>
     </form>
   );
 };

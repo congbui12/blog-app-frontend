@@ -1,7 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { useRegister } from '../../hooks';
-import type { RegisterDTO } from '../../schemas';
-import RegisterForm from '../../components/features/form/RegisterForm';
+import { useRegister } from '../hooks';
+import type { RegisterDTO } from '../schemas';
+import RegisterForm from '../components/features/form/RegisterForm';
 
 const Register = () => {
   const navigate = useNavigate();

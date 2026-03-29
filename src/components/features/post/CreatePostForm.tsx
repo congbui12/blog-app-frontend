@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { type CreatePostDTO, createPostSchema } from '../../../schemas';
-import InputField from '../../basics/InputField';
+import AppTextField from '../../basics/AppTextField';
 import RHFLexicalField from '../editor/RHFLexicalField';
 import { createEmptyDocument } from '../../../utils/editor';
 
@@ -18,7 +18,7 @@ const CreatePostForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputField control={control} name="title" label="Title" />
+      <AppTextField control={control} name="title" label="Title" />
       <RHFLexicalField control={control} name="content" label="Content" />
       <button type="submit">Save</button>
     </form>

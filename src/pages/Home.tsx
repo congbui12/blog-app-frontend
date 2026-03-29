@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
-import Layout from '../../components/layout';
-import PostList from '../../components/features/post/PostList';
-import { usePosts } from '../../hooks';
+import Layout from '../components/layout';
+import PostList from '../components/features/post/PostList';
+import { usePosts } from '../hooks';
 
 const Home = () => {
   const [searchParams] = useSearchParams();

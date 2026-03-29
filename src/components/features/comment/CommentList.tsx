@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useComments } from '../../../hooks';
 import CommentItem from './CommentItem';
 import CommentSortMenu from './CommentSortMenu';
-import Button from '../../basics/Button';
+import { Text, Flex, Button } from '@radix-ui/themes';
+import AppSpinner from '../../basics/AppSpinner';
 import type { LazyParams } from '../../../types';
 
 interface CommentListProps {
@@ -23,20 +24,27 @@ const CommentList = ({ postId, postAuthorId }: CommentListProps) => {
   );
 
   if (isLoading) {
-    return <div className="animate-pulse space-y-4">Loading comments...</div>;
+    return <AppSpinner label="Loading comments..." />;
   }
 
   if (comments.length === 0) {
-    return <div className="italic text-gray-500">No comments available</div>;
+    return (
+      <Text as="p" align="center" color="gray" size="2" className="italic mt-4">
+        No comments available
+      </Text>
+    );
   }
 
   return (
-    <div>
-      <CommentSortMenu
-        sort={params.sortOrder ?? 'desc'}
-        onSortChange={(newSort) => setParams((prev) => ({ ...prev, sortOrder: newSort }))}
-      />
-      <div className="space-y-4">
+    <Flex direction="column" gap="4" className="w-full">
+      <Flex justify="start" className="w-full md:w-3/4 mx-auto">
+        <CommentSortMenu
+          sort={params.sortOrder ?? 'desc'}
+          onSortChange={(newSort) => setParams((prev) => ({ ...prev, sortOrder: newSort }))}
+        />
+      </Flex>
+
+      <Flex direction="column" gap="4">
         {comments.map((comment) => (
           <CommentItem
             key={comment._id}
@@ -49,16 +57,20 @@ const CommentList = ({ postId, postAuthorId }: CommentListProps) => {
         ))}
 
         {hasNextPage && (
-          <Button
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            className="border px-4 py-2 rounded"
-          >
-            {isFetchingNextPage ? 'Loading...' : 'Load more'}
-          </Button>
+          <Flex justify="center" className="w-full md:w-3/4 mx-auto">
+            <Button
+              variant="outline"
+              color="gray"
+              onClick={() => fetchNextPage()}
+              loading={isFetchingNextPage}
+              className="cursor-pointer"
+            >
+              Load more
+            </Button>
+          </Flex>
         )}
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

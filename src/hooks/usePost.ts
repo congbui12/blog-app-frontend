@@ -181,7 +181,7 @@ export const useToggleFavorite = () => {
       queryClient.setQueriesData<PostsData>(
         { queryKey: ['posts', 'list', 'favorites'] }, // Targets only favorite keys
         (oldData) => {
-          if (!oldData) {
+          if (!oldData || !oldData.posts) {
             return oldData
           };
           // If the post was ALREADY favorited, UNfavoriting it will remove it from the view.
@@ -194,8 +194,7 @@ export const useToggleFavorite = () => {
 
       return { previousPost };
     },
-    onError: (error, id, context) => {
-      console.error("useToggleFavorite failed: ", error);
+    onError: (_, id, context) => {
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousPost) {
         queryClient.setQueryData(['posts', id], context.previousPost);

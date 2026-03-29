@@ -1,13 +1,12 @@
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { DropdownMenu } from '@radix-ui/themes';
 import { forwardRef } from 'react';
-import clsx from 'clsx';
 
 type DropdownItemProps = React.ComponentPropsWithoutRef<typeof DropdownMenu.Item>;
 
 const DropdownItem = forwardRef<React.ComponentRef<typeof DropdownMenu.Item>, DropdownItemProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, ...props }, ref) => {
     return (
-      <DropdownMenu.Item ref={ref} className={clsx(className)} {...props}>
+      <DropdownMenu.Item ref={ref} {...props}>
         {children}
       </DropdownMenu.Item>
     );

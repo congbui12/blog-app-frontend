@@ -10,12 +10,6 @@ import type { AxiosResponse } from 'axios';
 import type { LazyParams, ApiSuccessResponse, Comment } from '../types';
 import type { AddCommentDTO, EditCommentDTO } from '../schemas';
 
-// interface InfinitePostData {
-//   pages: PostItem[][];
-//   pageParams: number[];
-//   totalCount: number; // Add this
-// }
-
 export const useComments = (postId: string, params: LazyParams) => {
   const query = useInfiniteQuery<
     AxiosResponse<ApiSuccessResponse<Comment[]>>, // TQueryFnData
@@ -29,20 +23,10 @@ export const useComments = (postId: string, params: LazyParams) => {
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
       listCommentsOfPost(postId, { ...params, cursor: pageParam }),
     getNextPageParam: (lastPage) => {
-            // const firstPageMeta = data.pages[0]?.data?.meta;
       const meta = lastPage.data.meta;
       return meta?.hasMore ? (meta?.nextCursor as string | null) : null;
     },
     enabled: Boolean(postId),
-    // select: (data): InfinitePostData => {
-    //   const firstPageMeta = data.pages[0]?.data?.meta;
-    //   const postCount = (firstPageMeta?.postCount as number) ?? 0;
-    //   return {
-    //     pages: data.pages.map((page) => page.data?.payload ?? []),
-    //     pageParams: data.pageParams,
-    //     totalCount: postCount,
-    //   }
-    // },
   });
 
   const comments = query.data?.pages.flatMap((page) => page.data.payload ?? []) ?? [];

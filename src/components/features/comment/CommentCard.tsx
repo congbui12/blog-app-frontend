@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from 'lucide-react';
-import Button from '../../basics/Button';
+import { Box, Flex, Text, IconButton } from '@radix-ui/themes';
 import { useAuth, useDeleteComment } from '../../../hooks';
 import { isEdited, getTimeDistance } from '../../../utils/helper';
 import type { Comment } from '../../../types';
-import DropdownList from '../../basics/DropdownList';
+import AppDropdownMenu from '../../basics/AppDropdownMenu';
 import DropdownItem from '../../basics/DropdownItem';
 import AppAlertDialog from '../../basics/AppAlertDialog';
 
@@ -46,73 +46,62 @@ const CommentCard = ({ comment, postAuthorId, onToggleEdit }: CommentCardProps) 
 
   return (
     <>
-      <div className="w-3/4 border border-gray-200 rounded-lg bg-white shadow-sm p-4 space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-gray-900">{comment.user.username}</span>
+      <Box className="w-full md:w-3/4 mx-auto border border-gray-200 rounded-lg bg-white shadow-sm p-4 relative">
+        <Flex justify="between" align="start">
+          <Flex align="center" gap="2" mb="2">
+            <Text weight="bold" size="2" color="gray" highContrast>
+              {comment.user.username}
+            </Text>
 
-          <span className="text-xs text-gray-400 font-light">{postedOn}</span>
+            <Text weight="light" size="1" color="gray">
+              {postedOn}
+            </Text>
 
-          {isCommentEdited && (
-            <span className="text-[10px] uppercase font-medium text-gray-400">(Edited)</span>
-          )}
-        </div>
-
-        <p className="text-gray-700 leading-relaxed">{comment.content}</p>
-
-        <div className="flex items-center gap-3 pt-1">
+            {isCommentEdited && (
+              <Text size="1" color="gray" className="uppercase opacity-60">
+                (Edited)
+              </Text>
+            )}
+          </Flex>
           {showOptions && (
-            <DropdownList trigger={<EllipsisVerticalIcon className="w-4 h-4" />}>
+            <AppDropdownMenu
+              trigger={
+                <IconButton variant="ghost" color="gray" size="2" className="cursor-pointer">
+                  <EllipsisVerticalIcon className="w-4 h-4" />
+                </IconButton>
+              }
+            >
               {canEdit && (
-                <DropdownItem>
-                  <Button
-                    onClick={onToggleEdit}
-                    className="
-                    inline-flex items-center p-1.5 rounded
-                    border-none
-                    bg-transparent
-                    hover:bg-emerald-100
-                    transition
-                    focus-visible:outline-none
-                    focus-visible:ring-2
-                    focus-visible:ring-emerald-500
-                    focus-visible:ring-offset-2
-                    cursor-pointer
-                  "
-                  >
-                    <PencilIcon className="w-4 h-4" />
-                  </Button>
+                <DropdownItem onClick={onToggleEdit} className="cursor-pointer" color="green">
+                  <Flex align="center" gap="2">
+                    <PencilIcon className="w-3 h-3" /> Edit
+                  </Flex>
                 </DropdownItem>
               )}
               {canDelete && (
-                <DropdownItem>
-                  <Button
-                    onClick={() => setIsDeleteDialogOpen(true)}
-                    className="
-                    inline-flex items-center p-1.5 rounded
-                    border-none
-                    bg-transparent
-                    hover:bg-rose-100
-                    transition
-                    focus-visible:outline-none
-                    focus-visible:ring-2
-                    focus-visible:ring-rose-500
-                    focus-visible:ring-offset-2
-                    cursor-pointer
-                  "
-                  >
-                    <TrashIcon className="w-4 h-4" />
-                  </Button>
+                <DropdownItem
+                  onClick={() => setIsDeleteDialogOpen(true)}
+                  className="cursor-pointer"
+                  color="red"
+                >
+                  <Flex align="center" gap="2">
+                    <TrashIcon className="w-3 h-3" /> Delete
+                  </Flex>
                 </DropdownItem>
               )}
-            </DropdownList>
+            </AppDropdownMenu>
           )}
-        </div>
-      </div>
+        </Flex>
+
+        <Text as="p" size="2" color="gray" className="leading-relaxed whitespace-pre-wrap">
+          {comment.content}
+        </Text>
+      </Box>
       <AppAlertDialog
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         title="Delete comment"
-        description="Are you sure you want to delete this comment"
+        description="Are you sure you want to delete this comment?"
         onAction={handleDeleteComment}
       />
     </>

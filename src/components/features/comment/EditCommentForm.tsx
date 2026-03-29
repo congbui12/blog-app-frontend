@@ -25,7 +25,7 @@ const EditCommentForm = (props: EditCommentFormProps) => {
 
   const { mutate, isPending } = useEditComment();
 
-  const handleSaveEdit = (data: EditCommentDTO) => {
+  const handleSaveChanges = (data: EditCommentDTO) => {
     mutate(
       { commentId: props.commentId, dto: data, postId: props.postId },
       {
@@ -43,8 +43,8 @@ const EditCommentForm = (props: EditCommentFormProps) => {
       control={control}
       name="content"
       onCancel={props.onCancel}
-      onSubmit={handleSubmit(handleSaveEdit)}
-      isDisabled={isPending || !isDirty}
+      onSubmit={handleSubmit(handleSaveChanges)}
+      isDisabled={!isDirty}
       isPending={isPending}
       buttonText="Save"
     />

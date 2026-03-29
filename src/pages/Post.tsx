@@ -1,9 +1,9 @@
-import Layout from '../../components/layout';
+import Layout from '../components/layout';
 import { useParams } from 'react-router-dom';
-import PostDetail from '../../components/features/post/PostDetail';
-import AddCommentForm from '../../components/features/comment/AddCommentForm';
-import CommentList from '../../components/features/comment/CommentList';
-import { useFetchPost } from '../../hooks';
+import PostDetail from '../components/features/post/PostDetail';
+import AddCommentForm from '../components/features/comment/AddCommentForm';
+import CommentList from '../components/features/comment/CommentList';
+import { useFetchPost } from '../hooks';
 
 const Post = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import InputField from '../../basics/InputField';
+import AppTextField from '../../basics/AppTextField';
 import { MailIcon } from 'lucide-react';
-import Button from '../../basics/Button';
+import { Flex, Button } from '@radix-ui/themes';
 import { initiatePasswordResetSchema, type InitiatePasswordResetDTO } from '../../../schemas';
 
 interface ForgotPasswordFormProps {
@@ -22,21 +22,27 @@ const ForgotPasswordForm = ({ onSubmit, isLoading }: ForgotPasswordFormProps) =>
     },
   });
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
-      <InputField
-        label="Enter your email to receive a reset link"
-        icon={MailIcon}
-        placeholder="e.g. jdoe@example.com"
-        control={control}
-        name="email"
-      />
-      <Button
-        type="submit"
-        disabled={isLoading || !isDirty}
-        className="w-full py-3 mt-2 bg-cyan-500 text-white font-bold rounded-xl hover:bg-cyan-600 shadow-lg shadow-cyan-200 disabled:opacity-70 transition-all"
-      >
-        {isLoading ? 'Sending...' : 'Send'}
-      </Button>
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <Flex direction="column" gap="4" align="stretch">
+        <AppTextField
+          label="Enter your email to receive a reset link"
+          icon={MailIcon}
+          placeholder="e.g. jdoe@example.com"
+          control={control}
+          name="email"
+        />
+        <Button
+          size="3"
+          variant="solid"
+          highContrast
+          loading={isLoading}
+          className="cursor-pointer"
+          type="submit"
+          disabled={!isDirty}
+        >
+          Send
+        </Button>
+      </Flex>
     </form>
   );
 };

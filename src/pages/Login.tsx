@@ -1,7 +1,7 @@
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useLogin } from '../../hooks';
-import { type LoginDTO } from '../../schemas';
-import LoginForm from '../../components/features/form/LoginForm';
+import { useLogin } from '../hooks';
+import { type LoginDTO } from '../schemas';
+import LoginForm from '../components/features/form/LoginForm';
 
 const Login = () => {
   const navigate = useNavigate();

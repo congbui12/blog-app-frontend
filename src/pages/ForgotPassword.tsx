@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useForgotPassword } from '../../hooks';
-import type { InitiatePasswordResetDTO } from '../../schemas';
-import ForgotPasswordForm from '../../components/features/form/ForgotPasswordForm';
+import { useForgotPassword } from '../hooks';
+import type { InitiatePasswordResetDTO } from '../schemas';
+import ForgotPasswordForm from '../components/features/form/ForgotPasswordForm';
 
 const ForgotPassword = () => {
   const { mutate, isPending } = useForgotPassword();

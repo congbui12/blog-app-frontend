@@ -1,26 +1,18 @@
-import { Routes, Route } from 'react-router-dom';
-// import Dashboard from '../pages/protected/Dashboard';
-// import PostForm from '../pages/protected/PostForm';
-// import Profile from '../pages/protected/Profile';
-// import { useAuth } from '../contexts/AuthContext';
-import NotFound from '../pages/NotFound';
+import type { JSX } from 'react';
+import { useAuth } from '../hooks';
+import { useLocation, Navigate } from 'react-router-dom';
+import PageLoader from '../components/basics/PageLoader';
 
-const ProtectedRoutes = () => {
-  // const { user } = useAuth();
-  // if (!user) {
-  //   return <Navigate to="/login" />;
-  // }
-
-  return (
-    <Routes>
-      {/* <Route path="dashboard" element={<Dashboard />}></Route>
-      <Route path="post/new" element={<PostForm />}></Route>
-      <Route path="post/:slug/edit" element={<PostForm />}></Route>
-      <Route path="me" element={<Profile />}></Route> */}
-      {/* <Route path="dashboard" element={<Dashboard />}></Route> */}
-      <Route path="*" element={<NotFound />}></Route>
-    </Routes>
-  );
+const ProtectedRoutes = ({ children }: { children: JSX.Element }) => {
+  const { user, isLoading } = useAuth();
+  const location = useLocation();
+  if (isLoading) {
+    return <PageLoader isOpen={isLoading} />;
+  }
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  return children;
 };
 
 export default ProtectedRoutes;
